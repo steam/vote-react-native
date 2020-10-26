@@ -26,6 +26,12 @@ blog post
 - Translations - [React i18next](https://react.i18next.com/)
 - Maps - [React Native Maps](https://github.com/react-native-maps/react-native-maps)
 
+## Next up
+
+- A bunch more jest testing
+- end to end acceptance testing with [Detox](https://github.com/wix/Detox)
+- CI/CD using [Github Actions](https://docs.github.com/en/free-pro-team@latest/actions)
+
 ## 📄 License
 
 Vote is MIT licensed, as found in the [LICENSE][l] file.
