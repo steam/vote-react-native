@@ -1,0 +1,65 @@
+module.exports = {
+  root: true,
+  extends: [
+    '@react-native-community',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'eslint-config-prettier',
+    'eslint-config-prettier/@typescript-eslint',
+    'plugin:react/recommended',
+  ],
+  parser: '@typescript-eslint/parser',
+  plugins: [
+    '@typescript-eslint/eslint-plugin',
+    'react-hooks',
+    'eslint-plugin-react-native',
+    'sort-destructure-keys',
+  ],
+  parserOptions: {
+    ecmaVersion: 2019,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
+    project: './tsconfig.json',
+  },
+  rules: {
+    '@typescript-eslint/no-use-before-define': 0,
+    semi: 0,
+    'react-native/no-single-element-style-arrays': 2,
+    'react-native/sort-styles': 2,
+    'react-native/no-unused-styles': 2,
+    'no-case-declarations': 0,
+    'prefer-const': 2,
+    'no-undef': 0,
+    'no-console': 1,
+    'react/jsx-sort-props': [
+      1,
+      {
+        ignoreCase: true,
+      },
+    ],
+    'react/prop-types': 0,
+    'react-hooks/rules-of-hooks': 2,
+    'react-hooks/exhaustive-deps': 1,
+    '@typescript-eslint/strict-boolean-expressions': 1,
+    '@typescript-eslint/camelcase': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
+    '@typescript-eslint/explicit-member-accessibility': [
+      2,
+      {
+        overrides: {
+          constructors: 'off',
+        },
+      },
+    ],
+    complexity: [1, 10],
+    'max-nested-callbacks': [1, 3],
+    'max-depth': [1, 3],
+    'sort-imports': [2, { ignoreCase: true, ignoreDeclarationSort: true }],
+    'sort-destructure-keys/sort-destructure-keys': [2, { caseSensitive: false }],
+  },
+}
