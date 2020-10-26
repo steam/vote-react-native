@@ -1,5 +1,12 @@
 import React, { FC, useEffect } from 'react'
-import { FlatList, ListRenderItem, StyleSheet } from 'react-native'
+import {
+  ActivityIndicator,
+  FlatList,
+  ListRenderItem,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { RouteProp } from '@react-navigation/native'
 import { Route, ScreenNavigatorParamList } from '../types'
 import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/types'
@@ -25,7 +32,7 @@ type Props = {
 
 const LocationsScreen: FC<Props> = ({ navigation, route }) => {
   const { dispatch } = useCivicInfoDispatch()
-  const { pollingLocations } = useCivicInfoState()
+  const { pollingLocations, status } = useCivicInfoState()
   useEffect(() => {
     const load = async () => {
       loadPollingPlaces(dispatch, route.params.address)
@@ -44,20 +51,47 @@ const LocationsScreen: FC<Props> = ({ navigation, route }) => {
     return <Row location={item} onPress={onPress} />
   }
 
+  const showList = status === 'finished' && pollingLocations.length > 0
+  const showZeroResults = status === 'finished' && pollingLocations.length === 0
   return (
-    <FlatList
-      data={pollingLocations}
-      keyExtractor={keyExtractor}
-      renderItem={renderLocation}
-      scrollEnabled={true}
-      style={styles.list}
-      testID="location-list"
-    />
+    <>
+      {status === 'loading' ? <ActivityIndicator size="large" /> : null}
+      {status === 'error' ? (
+        <View style={styles.errorContainer}>
+          <ActivityIndicator size="large" />
+        </View>
+      ) : null}
+      {showZeroResults ? (
+        <View style={styles.errorContainer}>
+          <Text style={styles.noResults}>
+            No polling locations found, please try another address.
+          </Text>
+        </View>
+      ) : null}
+      {showList ? (
+        <FlatList
+          data={pollingLocations}
+          keyExtractor={keyExtractor}
+          renderItem={renderLocation}
+          scrollEnabled={true}
+          style={styles.list}
+          testID="location-list"
+        />
+      ) : null}
+    </>
   )
 }
 
 const styles = StyleSheet.create({
+  errorContainer: {
+    backgroundColor: colors.uiLight,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    padding: 20,
+  },
   list: { backgroundColor: colors.uiLight, flex: 1, padding: 25 },
+  noResults: { color: colors.uiMedium, fontSize: 20, textAlign: 'center' },
 })
 
 export { LocationsScreen }
